@@ -11,7 +11,7 @@ class TripCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10),
       height: 155,
       decoration: BoxDecoration(
-        //image:"" ,
+        // image:DecorationImage(image: NetworkImage("")) ,
         color: Colors.grey,
         borderRadius: BorderRadius.circular(4),
         boxShadow: [

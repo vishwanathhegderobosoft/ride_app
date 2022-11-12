@@ -1,6 +1,7 @@
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:ride/screens/chat/chat_Screen.dart';
 import 'package:ride/screens/invoice/invoice_screen.dart';
+import 'package:ride/screens/manual/owners_manual.dart';
 import 'package:ride/screens/profile_header.dart';
 import 'package:ride/screens/tool_kit.dart';
 import 'package:timeline_node/timeline_node.dart';
@@ -35,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ChatScreen(),
+      home: OwnersManual(),
     );
   }
 }

@@ -26,6 +26,7 @@ dependencies:
   open_document: ^1.0.5
   auto_size_text_field: ^2.1.0
   emoji_picker_flutter: ^1.5.0
+  expandable_text: ^2.3.0
 
 
 dev_dependencies:
@@ -44,6 +45,7 @@ flutter:
     - images/tour/
     - images/tour/tour_4/
     - images/profile/
+    - images/manual/
   fonts:
     - family: OpenSans
       fonts:

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'message_bubble.dart';
+import 'package:expandable_text/expandable_text.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -13,20 +16,63 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController _messageController = TextEditingController();
   bool _isEmoji = false;
   FocusNode focus = FocusNode();
+  List<Widget> messageBubbles = [
+    MessageBubble(isMe: true),
+    MessageBubble(
+      isMe: false,
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.more_vert_outlined),
-            ),
-          )
+        title: Center(
+          child: Text(
+            "Reunion Manali",
+            style:
+                GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.w600),
+          ),
+        ),
+        backgroundColor: Color.fromRGBO(240, 148, 85, 1),
+        actions: [
+          PopupMenuButton<int>(
+            onSelected: (value) {
+              print(value);
+            },
+            // position: PopupMenuPosition.under,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 1,
+                child: Text(
+                  "Group Info",
+                  style: TextStyle(
+                    color: Color(0xdd4E4E4E),
+                  ),
+                ),
+              ),
+              // popupmenu item 2
+              PopupMenuItem(
+                value: 2,
+                child: Text(
+                  "Notifications",
+                  style: TextStyle(
+                    color: Color(0xdd4E4E4E),
+                  ),
+                ),
+              ),
+              PopupMenuItem(
+                value: 3,
+                child: Text(
+                  "Clear Chat",
+                  style: TextStyle(
+                    color: Color(0xdd4E4E4E),
+                  ),
+                ),
+              ),
+            ],
+            color: Colors.white, padding: EdgeInsets.all(0),
+          ),
         ],
         leading: BackButton(
           color: Colors.white,
@@ -45,8 +91,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       'images/chat.png',
                     ),
                     scale: 1.7,
-                    opacity: 0.07,
+                    opacity: 0.05,
                   ),
+                ),
+                child: ListView(
+                  reverse: true,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  children: messageBubbles,
                 ),
               ),
             ),
@@ -96,7 +147,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             _isEmoji = false;
                           });
                         },
-                        // focusNode:,
+                        autofocus: false,
                         controller: _messageController,
                         style: TextStyle(fontSize: 16),
                         minFontSize: 15,
@@ -107,7 +158,52 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: new Icon(Icons.photo),
+                                  title: new Text('Photo'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: new Icon(Icons.music_note),
+                                  title: new Text('Music'),
+                                  onTap: () {
+                                    //   Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: new Icon(Icons.videocam),
+                                  title: new Text('Video'),
+                                  onTap: () {
+                                    //  Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: new Icon(Icons.share),
+                                  title: new Text('Share'),
+                                  onTap: () {
+                                    // Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: new Icon(Icons.file_copy_rounded),
+                                  title: new Text('Files'),
+                                  onTap: () {
+                                    // Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
                     child: Icon(
                       Icons.attach_file_outlined,
                       color: Color(0xff7F7F7F),
@@ -189,52 +285,6 @@ class _ChatScreenState extends State<ChatScreen> {
           }
           return Future.value(false);
         },
-      ),
-    );
-  }
-}
-
-class DropDownMenu extends StatelessWidget {
-  @override
-  GlobalKey _key = LabeledGlobalKey("button_icon");
-  late OverlayEntry _overlayEntry;
-  late Size buttonSize;
-  late Offset buttonPosition;
-  bool isMenuOpen = false;
-  Widget build(BuildContext context) {
-    List<Icon> icons = [
-      Icon(Icons.person),
-      Icon(Icons.settings),
-      Icon(Icons.credit_card),
-    ];
-    return Container(
-      height: icons.length * buttonSize.height,
-      decoration: BoxDecoration(
-        color: Color(0xFFF67C0B9),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Theme(
-        data: ThemeData(
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            icons.length,
-            (index) {
-              return GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: buttonSize.width,
-                  height: buttonSize.height,
-                  child: icons[index],
-                ),
-              );
-            },
-          ),
-        ),
       ),
     );
   }
